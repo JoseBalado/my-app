@@ -40,28 +40,4 @@
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
   </body>
-
-<script src="signalr.js"></script>
-<script>
-"use strict";
-
-console.log("Just write something!!!");
-
-var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
-
-connection.on("ReceiveMessage", function (user, message) {
-    document.getElementById("percentageUsage").innerHTML = "CPU Percentage Usage: " + message;
-});
-
-connection.on("SendQueue", function (user, message) {
-    drawPercentage(message);
-});
-
-connection.start().then(function () {
-    console.log("Connection started.");
-}).catch(function (err) {
-    return console.error(err.toString());
-});
-</script>
-
 </html>
