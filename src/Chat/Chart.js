@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 // vertical lines
 const gridV = ctx => {
@@ -69,7 +69,7 @@ const secondsColumn = seconds => {
         }
 }
 
-const Chart = (props) => {
+const Chart = props => {
     console.log(props)
 
     const canvas = useRef(null);
@@ -78,15 +78,11 @@ const Chart = (props) => {
 
     useEffect(() => {
         percentageColumn(percentage);
-        percentageColumn(seconds);
+        secondsColumn(seconds);
     }, []);
 
     useEffect(() => {
-        // Update the document title using the browser API
         const ctx = canvas.current.getContext("2d");
-
-        var canvasWidth = ctx.canvas.width;
-        var canvasHight = ctx.canvas.height;
 
         drawPercentage(ctx, props.graph);
 
