@@ -30,35 +30,65 @@ const gridH = ctx => {
     ctx.stroke();
 }
 
+const drawPercentage = (ctx, message) => {
+    const totalNUmberOfHorizontalDivisions = 101;
 
-const Chart = (props) => {
-    console.log(props)
+    var canvasWidth = ctx.canvas.width;
+    var canvasHight = ctx.canvas.height;
 
-    const canvas = useRef(null);
-    const seconds = useRef(null);
-    const percentage = useRef(null);
+    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
-    useEffect(() => {
-        // Update the document title using the browser API
-        const ctx = canvas.current.getContext("2d");
-        document.title = `You clicked ${props.graph[0]} times`;
+    ctx.beginPath();
 
-        var canvasWidth = ctx.canvas.width;
-        var canvasHight = ctx.canvas.height;
+    //actual graph
+    for(var i = 0; i < message.length; i++){
+        console.log("Hi: ", message);
+        ctx.strokeStyle = '#1dd2af';
+        ctx.lineWidth = 2;
+        ctx.lineTo(i * canvasWidth / (totalNUmberOfHorizontalDivisions - 1), canvasHight - (canvasHight * Math.abs(parseFloat(message[i])) / 100));
+    }
 
-        for (let i = 1; i <= 10; i++) {
-            var second = document.createElement('span');
-            var text = document.createTextNode(`${i * 10}s`)
-            second.appendChild(text);
-            seconds.current.appendChild(second);
-        }
+    ctx.stroke();
+}
 
+const percentageColumn = percentage => {
         for (let i = 10; i >= 1; i--) {
             var value = document.createElement('span');
             var text_percentage = document.createTextNode(`${i * 10}`)
             value.appendChild(text_percentage);
             percentage.current.appendChild(value);
         }
+}
+
+const secondsColumn = seconds => {
+        for (let i = 1; i <= 10; i++) {
+            var second = document.createElement('span');
+            var text = document.createTextNode(`${i * 10}s`)
+            second.appendChild(text);
+            seconds.current.appendChild(second);
+        }
+}
+
+const Chart = (props) => {
+    console.log(props)
+
+    const canvas = useRef(null);
+    const percentage = useRef(null);
+    const seconds = useRef(null);
+
+    useEffect(() => {
+        percentageColumn(percentage);
+        percentageColumn(seconds);
+    }, []);
+
+    useEffect(() => {
+        // Update the document title using the browser API
+        const ctx = canvas.current.getContext("2d");
+
+        var canvasWidth = ctx.canvas.width;
+        var canvasHight = ctx.canvas.height;
+
+        drawPercentage(ctx, props.graph);
 
         gridV(ctx);
         gridH(ctx);
@@ -66,10 +96,6 @@ const Chart = (props) => {
 
     return (
         <div>
-            Last 100 CPU Percentage Usage:
-                {props.graph.map(item => {
-                    return item[0] + " ";
-                })}
             <div ref={percentage}></div>
             <canvas ref={canvas} width={800} height={400} />
             <div ref={seconds}></div>
