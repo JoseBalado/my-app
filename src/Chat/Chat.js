@@ -6,15 +6,14 @@ import ChatInput from './ChatInput/ChatInput';
 
 const Chat = () => {
     const [ connection, setConnection ] = useState(null);
-    const [ chat, setChat ] = useState([]);
+    const [ chat, setChat ] = useState("");
     const latestChat = useRef(null);
 
     latestChat.current = chat;
 
     useEffect(() => {
         const newConnection = new HubConnectionBuilder()
-            // .withUrl("/chatHub")
-            .withUrl("chatHub")
+            .withUrl("https://localhost:7116/chatHub")
             .withAutomaticReconnect()
             .build();
 
@@ -27,11 +26,13 @@ const Chat = () => {
                 .then(result => {
                     console.log('Connected!');
     
-                    connection.on('ReceiveMessage', message => {
-                        const updatedChat = [...latestChat.current];
-                        updatedChat.push(message);
+                    connection.on('ReceiveMessage', (use, message) => {
+                        // const updatedChat = [...latestChat.current];
+                        // updatedChat = message;
+
+                        console.log("message " + message);
                     
-                        setChat(updatedChat);
+                        setChat(message);
                     });
                 })
                 .catch(e => console.log('Connection failed: ', e));
