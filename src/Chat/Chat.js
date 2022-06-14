@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { HubConnectionBuilder } from '@microsoft/signalr';
 
 import ChatWindow from './ChatWindow/ChatWindow';
-import ChatInput from './ChatInput/ChatInput';
 
 const Chat = () => {
     const [ connection, setConnection ] = useState(null);
@@ -39,28 +38,8 @@ const Chat = () => {
         }
     }, [connection]);
 
-    const sendMessage = async (user, message) => {
-        const chatMessage = {
-            user: user,
-            message: message
-        };
-
-        if (connection.connectionStarted) {
-            try {
-                await connection.send('SendMessage', chatMessage);
-            }
-            catch(e) {
-                console.log(e);
-            }
-        }
-        else {
-            alert('No connection to server yet.');
-        }
-    }
-
     return (
         <div>
-            <ChatInput sendMessage={sendMessage} />
             <hr />
             <ChatWindow chat={chat}/>
         </div>
