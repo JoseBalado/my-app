@@ -14,7 +14,7 @@ const Chat = () => {
 
     useEffect(() => {
         const newConnection = new HubConnectionBuilder()
-            .withUrl("https://localhost:7116/chatHub")
+            .withUrl("https://192.168.1.33:7116/chatHub")
             .withAutomaticReconnect()
             .build();
 
