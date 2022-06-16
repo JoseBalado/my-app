@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import Seconds from './Seconds';
 
 // vertical lines
 const gridV = ctx => {
@@ -42,7 +43,7 @@ const drawPercentage = (ctx, message) => {
 
     //actual graph
     for(var i = 0; i < message.length; i++){
-        console.log("Hi: ", message);
+        // console.log("Hi: ", message);
         ctx.strokeStyle = '#1dd2af';
         ctx.lineWidth = 2;
         ctx.lineTo(i * canvasWidth / (totalNUmberOfHorizontalDivisions - 1), canvasHight - (canvasHight * Math.abs(parseFloat(message[i])) / 100));
@@ -60,25 +61,14 @@ const percentageColumn = percentage => {
         }
 }
 
-const secondsColumn = seconds => {
-        for (let i = 1; i <= 10; i++) {
-            var second = document.createElement('span');
-            var text = document.createTextNode(`${i * 10}s`)
-            second.appendChild(text);
-            seconds.current.appendChild(second);
-        }
-}
-
 const Chart = props => {
-    console.log(props)
+    // console.log(props)
 
     const canvas = useRef(null);
     const percentage = useRef(null);
-    const seconds = useRef(null);
 
     useEffect(() => {
         percentageColumn(percentage);
-        secondsColumn(seconds);
     }, []);
 
     useEffect(() => {
@@ -94,7 +84,7 @@ const Chart = props => {
         <div id='chart-wrapper'>
             <div id='percentage' ref={percentage}></div>
             <canvas id='chart' ref={canvas} width={800} height={400} />
-            <div id='seconds' ref={seconds}></div>
+            <Seconds />
         </div>
     )
 };

@@ -31,13 +31,13 @@ const Chat = () => {
                         // const updatedChat = [...latestChat.current];
                         // updatedChat = message;
 
-                        console.log("message " + message);
+                        // console.log("message " + message);
                     
                         setChat(message);
                     });
 
                     connection.on('SendQueue', (user, message) => {
-                        console.log("Queue " + message);
+                        // console.log("Queue " + message);
 
                         setQueue(message);
                     });
