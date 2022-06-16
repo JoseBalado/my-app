@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import Percentage from './Percentage';
 import Seconds from './Seconds';
 
 // vertical lines
@@ -52,24 +53,10 @@ const drawPercentage = (ctx, message) => {
     ctx.stroke();
 }
 
-const percentageColumn = percentage => {
-        for (let i = 10; i >= 1; i--) {
-            var value = document.createElement('span');
-            var text_percentage = document.createTextNode(`${i * 10}`)
-            value.appendChild(text_percentage);
-            percentage.current.appendChild(value);
-        }
-}
-
 const Chart = props => {
     // console.log(props)
 
     const canvas = useRef(null);
-    const percentage = useRef(null);
-
-    useEffect(() => {
-        percentageColumn(percentage);
-    }, []);
 
     useEffect(() => {
         const ctx = canvas.current.getContext("2d");
@@ -82,7 +69,7 @@ const Chart = props => {
 
     return (
         <div id='chart-wrapper'>
-            <div id='percentage' ref={percentage}></div>
+            <Percentage />
             <canvas id='chart' ref={canvas} width={800} height={400} />
             <Seconds />
         </div>
