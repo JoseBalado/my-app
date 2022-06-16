@@ -91,10 +91,10 @@ const Chart = props => {
     });
 
     return (
-        <div>
-            <div ref={percentage}></div>
-            <canvas ref={canvas} width={800} height={400} />
-            <div ref={seconds}></div>
+        <div id='chart-wrapper'>
+            <div id='percentage' ref={percentage}></div>
+            <canvas id='chart' ref={canvas} width={800} height={400} />
+            <div id='seconds' ref={seconds}></div>
         </div>
     )
 };
